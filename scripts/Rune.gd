@@ -27,6 +27,8 @@ func _ready():
 	
 	# Ensure process is initially disabled until dragging
 	set_process(false)
+	
+	print("Rune initialized: ", rune_type)
 
 func _input_event(_viewport, event, _shape_idx):
 	if current_state == "activated":
@@ -35,8 +37,10 @@ func _input_event(_viewport, event, _shape_idx):
 	# Mouse button pressed - start dragging
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
+			print("Mouse down on rune: ", rune_type)
 			start_drag()
 		else:
+			print("Mouse up on rune: ", rune_type)
 			end_drag()
 
 # Called every frame while being dragged
@@ -48,10 +52,13 @@ func _process(_delta):
 # Start dragging this rune
 func start_drag():
 	if current_state == "placed" or current_state == "activated":
+		print("Cannot drag rune in state: ", current_state)
 		return
 		
 	is_being_dragged = true
 	current_state = "being_dragged"
+	
+	print("Started dragging rune: ", rune_type)
 	
 	# Bring to front visually
 	z_index = 10
@@ -73,10 +80,14 @@ func end_drag():
 	var overlapping_areas = get_overlapping_areas()
 	var valid_placement = false
 	
+	print("Checking ", overlapping_areas.size(), " overlapping areas for placement")
+	
 	for area in overlapping_areas:
 		if area is RuneNode:
 			var node = area
+			print("Found RuneNode: ", node.node_position, " requires: ", node.required_rune_type)
 			if node.can_accept_rune(rune_type):
+				print("Placing rune ", rune_type, " on node ", node.node_position)
 				# Place on node
 				place_on_node(node)
 				valid_placement = true
@@ -84,6 +95,7 @@ func end_drag():
 	
 	# If no valid placement, return to tray
 	if not valid_placement:
+		print("No valid placement found, returning to tray")
 		return_to_tray()
 	
 	# Signal that dragging has ended
@@ -101,12 +113,16 @@ func place_on_node(node):
 	current_state = "placed"
 	current_node = node
 	
+	print("Placing rune on node: ", node.node_position)
+	
 	# Inform the node that this rune is being placed on it
 	if node.place_rune(self):
 		# Successfully placed
+		print("Rune placed successfully")
 		z_index = 5  # Above node but below other dragged runes
 	else:
 		# Node rejected placement
+		print("Node rejected placement")
 		return_to_tray()
 
 # Return this rune to its original position in the tray
@@ -119,13 +135,18 @@ func return_to_tray():
 	current_state = "in_tray"
 	current_node = null
 	z_index = 0
+	
+	print("Rune returned to tray")
 
 # Activate the rune (when part of a completed pattern)
 func activate():
 	if current_state != "placed":
+		print("Cannot activate rune in state: ", current_state)
 		return
 		
 	current_state = "activated"
+	
+	print("Rune activated: ", rune_type)
 	
 	# Show the glow effect
 	$RuneGlow.visible = true

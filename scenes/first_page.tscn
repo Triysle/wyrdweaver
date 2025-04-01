@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://b6x1re4on3cuq"]
+[gd_scene load_steps=19 format=3 uid="uid://b6x1re4on3cuq"]
 
 [ext_resource type="Texture2D" uid="uid://bk1hppqxlbqcd" path="res://assets/temp/parchment-background.svg" id="1_tki75"]
 [ext_resource type="Script" uid="uid://cuoe7eyd8mmcr" path="res://scripts/RunicCircle.gd" id="2_gqg7b"]
@@ -16,8 +16,6 @@
 [ext_resource type="Texture2D" uid="uid://80g6msa45igf" path="res://assets/temp/rune-jera.svg" id="14_mrhn4"]
 [ext_resource type="Texture2D" uid="uid://uryt46ly3ae" path="res://assets/temp/rune-dagaz.svg" id="15_2jpep"]
 [ext_resource type="Script" uid="uid://2d36w4o0in7d" path="res://scripts/ResourceContainer.gd" id="16_v2lex"]
-[ext_resource type="Texture2D" uid="uid://dmq1hrmmadxs2" path="res://assets/temp/resource-container.svg" id="17_g2n4f"]
-[ext_resource type="Texture2D" uid="uid://cjq5aqorkql2p" path="res://assets/temp/resource-fill.svg" id="18_46kgv"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ux0xw"]
 radius = 16.0
@@ -155,6 +153,16 @@ gravity = Vector2(0, -980)
 visible = false
 texture = ExtResource("7_l8pgn")
 
+[node name="ResourceContainer" type="Node2D" parent="."]
+position = Vector2(88, 576)
+script = ExtResource("16_v2lex")
+
+[node name="ProgressBar" type="ProgressBar" parent="ResourceContainer"]
+offset_left = 248.0
+offset_top = -24.0
+offset_right = 728.0
+show_percentage = false
+
 [node name="RuneTray" type="Node2D" parent="."]
 position = Vector2(576, 600)
 
@@ -236,27 +244,3 @@ texture = ExtResource("11_su4tq")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RuneTray/RuneContainer/RuneDagaz"]
 shape = SubResource("CircleShape2D_iw36l")
-
-[node name="ResourceContainer" type="Node2D" parent="."]
-position = Vector2(88, 576)
-script = ExtResource("16_v2lex")
-
-[node name="ContainerGraphic" type="Sprite2D" parent="ResourceContainer"]
-texture = ExtResource("17_g2n4f")
-
-[node name="ResourceFill" type="Sprite2D" parent="ResourceContainer"]
-scale = Vector2(1e-05, 1e-05)
-texture = ExtResource("18_46kgv")
-
-[node name="ResourceParticles" type="CPUParticles2D" parent="ResourceContainer"]
-position = Vector2(0, -40)
-emitting = false
-lifetime = 0.3
-emission_shape = 1
-emission_sphere_radius = 25.0
-direction = Vector2(-1, 0)
-
-[node name="ResourceCounter" type="Label" parent="ResourceContainer"]
-offset_right = 40.0
-offset_bottom = 23.0
-horizontal_alignment = 1

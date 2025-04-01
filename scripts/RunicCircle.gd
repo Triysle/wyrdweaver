@@ -41,7 +41,11 @@ func _connect_node_signals():
 func _process(delta):
 	if is_circle_activated:
 		var amount = resource_generation_rate * delta
-		emit_signal("resource_generated", amount)
+		
+		# Direct access to resource container
+		var resource_container = get_node_or_null("/root/FirstPage/ResourceContainer")
+		if resource_container:
+			resource_container.add_resource(amount)
 
 # Handle a rune being placed correctly
 func _on_rune_placed_correctly(node_position):
@@ -70,7 +74,8 @@ func _update_connections():
 				var line = connection_lines.get_node_or_null(line_name)
 				if line:
 					line.visible = true
-					connection_lines_visible.append(cardinal_pos)
+					if not connection_lines_visible.has(cardinal_pos):
+						connection_lines_visible.append(cardinal_pos)
 
 # Check if the pattern is complete and activate the circle if it is
 func _check_pattern_completion():
@@ -99,8 +104,10 @@ func _activate_circle():
 	var tween = create_tween()
 	tween.tween_property($SuccessIndicator, "modulate:a", 0.0, 2.0)
 	
+	# Direct access to resource container
+	var resource_container = get_node_or_null("/root/FirstPage/ResourceContainer")
+	if resource_container:
+		resource_container.start_particles()
+	
 	# Start processing resource generation
 	set_process(true)
-	
-	# Emit the circle activated signal
-	emit_signal("circle_activated")
