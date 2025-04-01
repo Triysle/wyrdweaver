@@ -225,7 +225,7 @@ shape = SubResource("CircleShape2D_iw36l")
 [node name="RuneDagaz" type="Area2D" parent="RuneTray/RuneContainer"]
 position = Vector2(160, 0)
 script = ExtResource("9_qxcc4")
-rune_type = "Dagaz"
+rune_type = "dagaz"
 
 [node name="Sprite2D" type="Sprite2D" parent="RuneTray/RuneContainer/RuneDagaz"]
 texture = ExtResource("15_2jpep")

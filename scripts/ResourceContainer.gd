@@ -24,11 +24,14 @@ func _ready():
 	# Particles should be off initially
 	if particles:
 		particles.emitting = false
+	else:
+		print("ERROR: ResourceParticles not found in ResourceContainer!")
 
 # Add resource to the container
 func add_resource(amount: float):
 	current_resource = min(current_resource + amount, max_resource)
 	update_visuals()
+	print("Resource added: ", amount, " Current: ", current_resource)
 
 # Update all visual elements to match current resource amount
 func update_visuals():
@@ -36,18 +39,24 @@ func update_visuals():
 	
 	# Update fill sprite
 	if fill_sprite:
-		fill_sprite.scale = Vector2(
-			lerp(min_scale, max_scale, fill_percentage),
-			lerp(min_scale, max_scale, fill_percentage)
-		)
+		# Ensure the scale is never zero (which would make it invisible)
+		var new_scale = lerp(min_scale, max_scale, fill_percentage)
+		if new_scale <= 0.01:  # Minimum visible scale
+			new_scale = 0.01
+			
+		fill_sprite.scale = Vector2(new_scale, new_scale)
 		
 		# Also adjust alpha for extra visual feedback
 		fill_sprite.modulate.a = lerp(0.3, 0.8, fill_percentage)
+	else:
+		print("ERROR: ResourceFill sprite not found in ResourceContainer!")
 	
 	# Update counter text
 	if counter:
 		var display_value = _format_resource_value(current_resource)
 		counter.text = display_value
+	else:
+		print("ERROR: ResourceCounter not found in ResourceContainer!")
 
 # Format the resource value based on the display format
 func _format_resource_value(value: float) -> String:
@@ -96,8 +105,13 @@ func _format_resource_value(value: float) -> String:
 func start_particles():
 	if particles:
 		particles.emitting = true
+		print("Resource particles started!")
+	else:
+		print("ERROR: Cannot start particles - ResourceParticles not found!")
 		
 # Stop particle effects
 func stop_particles():
 	if particles:
 		particles.emitting = false
+	else:
+		print("ERROR: Cannot stop particles - ResourceParticles not found!")

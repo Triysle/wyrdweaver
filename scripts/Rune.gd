@@ -25,11 +25,10 @@ func _ready():
 	$CollisionShape2D.shape = CircleShape2D.new()
 	$CollisionShape2D.shape.radius = 30
 	
-	# Connect input signals
-	input_event.connect(_on_input_event)
+	# Ensure process is initially disabled until dragging
+	set_process(false)
 
-# Handle input events for dragging
-func _on_input_event(_viewport, event, _shape_idx):
+func _input_event(_viewport, event, _shape_idx):
 	if current_state == "activated":
 		return
 		
@@ -44,7 +43,7 @@ func _on_input_event(_viewport, event, _shape_idx):
 func _process(_delta):
 	if is_being_dragged:
 		# Update position to follow mouse
-		position = get_global_mouse_position()
+		global_position = get_global_mouse_position()
 
 # Start dragging this rune
 func start_drag():
@@ -96,7 +95,7 @@ func end_drag():
 # Place this rune on a specific node
 func place_on_node(node):
 	# Update the rune's position to center on the node
-	position = node.global_position
+	global_position = node.global_position
 	
 	# Update state
 	current_state = "placed"
