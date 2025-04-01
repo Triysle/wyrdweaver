@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 600">
+  <!-- Base parchment -->
+  <rect width="1024" height="600" fill="#e9e2d0"/>
+  
+  <!-- Texture overlay -->
+  <filter id="noise" x="0%" y="0%" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="5" stitchTiles="stitch"/>
+    <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0"/>
+  </filter>
+  
+  <rect width="1024" height="600" filter="url(#noise)" opacity="0.5"/>
+  
+  <!-- Edge wear -->
+  <rect x="5" y="5" width="1014" height="590" fill="none" stroke="#d0c9b8" stroke-width="10" opacity="0.7"/>
+  
+  <!-- Age spots -->
+  <circle cx="200" cy="100" r="30" fill="#d0c9b8" opacity="0.2"/>
+  <circle cx="800" cy="450" r="40" fill="#d0c9b8" opacity="0.15"/>
+  <circle cx="300" cy="500" r="25" fill="#d0c9b8" opacity="0.18"/>
+  <circle cx="700" cy="150" r="35" fill="#d0c9b8" opacity="0.12"/>
+  
+  <!-- Subtle fold marks -->
+  <line x1="512" y1="0" x2="512" y2="600" stroke="#d0c9b8" stroke-width="1" opacity="0.3"/>
+  <line x1="0" y1="300" x2="1024" y2="300" stroke="#d0c9b8" stroke-width="1" opacity="0.3"/>
+</svg>

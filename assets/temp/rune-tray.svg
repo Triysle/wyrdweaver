@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 100">
+  <!-- Tray background -->
+  <rect x="10" y="10" width="480" height="80" rx="10" ry="10" fill="#333" stroke="#555" stroke-width="2"/>
+  
+  <!-- Tray texture -->
+  <filter id="grain" x="0%" y="0%" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.15" numOctaves="3" stitchTiles="stitch"/>
+    <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0"/>
+  </filter>
+  
+  <rect x="10" y="10" width="480" height="80" rx="10" ry="10" filter="url(#grain)" opacity="0.3"/>
+  
+  <!-- Rune slots - these are just visual guides -->
+  <circle cx="90" cy="50" r="30" fill="none" stroke="#666" stroke-width="1" stroke-dasharray="3 2"/>
+  <circle cx="170" cy="50" r="30" fill="none" stroke="#666" stroke-width="1" stroke-dasharray="3 2"/>
+  <circle cx="250" cy="50" r="30" fill="none" stroke="#666" stroke-width="1" stroke-dasharray="3 2"/>
+  <circle cx="330" cy="50" r="30" fill="none" stroke="#666" stroke-width="1" stroke-dasharray="3 2"/>
+  <circle cx="410" cy="50" r="30" fill="none" stroke="#666" stroke-width="1" stroke-dasharray="3 2"/>
+  
+  <!-- Runic ornaments -->
+  <path d="M20 25 L40 25 M20 35 L35 35 M20 45 L30 45" stroke="#777" stroke-width="1"/>
+  <path d="M460 25 L480 25 M465 35 L480 35 M470 45 L480 45" stroke="#777" stroke-width="1"/>
+  <path d="M20 75 L40 75 M20 65 L35 65 M20 55 L30 55" stroke="#777" stroke-width="1"/>
+  <path d="M460 75 L480 75 M465 65 L480 65 M470 55 L480 55" stroke="#777" stroke-width="1"/>
+</svg>

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <!-- Background -->
+  <circle cx="200" cy="200" r="195" fill="none" stroke="#555" stroke-width="1"/>
+  
+  <!-- Main circle -->
+  <circle cx="200" cy="200" r="150" fill="none" stroke="#777" stroke-width="2"/>
+  
+  <!-- Inner circle -->
+  <circle cx="200" cy="200" r="50" fill="none" stroke="#777" stroke-width="1.5" stroke-dasharray="10 5"/>
+  
+  <!-- Cardinal markers -->
+  <line x1="200" y1="50" x2="200" y2="75" stroke="#aaa" stroke-width="1.5"/>
+  <line x1="350" y1="200" x2="325" y2="200" stroke="#aaa" stroke-width="1.5"/>
+  <line x1="200" y1="350" x2="200" y2="325" stroke="#aaa" stroke-width="1.5"/>
+  <line x1="50" y1="200" x2="75" y2="200" stroke="#aaa" stroke-width="1.5"/>
+  
+  <!-- Subtle runic patterns -->
+  <path d="M180 60 L220 60 M170 70 L230 70" stroke="#666" stroke-width="0.5" opacity="0.6"/>
+  <path d="M320 180 L320 220 M330 170 L330 230" stroke="#666" stroke-width="0.5" opacity="0.6"/>
+  <path d="M180 340 L220 340 M170 330 L230 330" stroke="#666" stroke-width="0.5" opacity="0.6"/>
+  <path d="M80 180 L80 220 M70 170 L70 230" stroke="#666" stroke-width="0.5" opacity="0.6"/>
+  
+  <!-- Faint construction lines -->
+  <line x1="50" y1="50" x2="350" y2="350" stroke="#555" stroke-width="0.5" opacity="0.3"/>
+  <line x1="350" y1="50" x2="50" y2="350" stroke="#555" stroke-width="0.5" opacity="0.3"/>
+  <line x1="200" y1="0" x2="200" y2="400" stroke="#555" stroke-width="0.5" opacity="0.3"/>
+  <line x1="0" y1="200" x2="400" y2="200" stroke="#555" stroke-width="0.5" opacity="0.3"/>
+</svg>
