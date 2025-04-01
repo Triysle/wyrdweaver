@@ -1,0 +1,262 @@
+[gd_scene load_steps=21 format=3 uid="uid://b6x1re4on3cuq"]
+
+[ext_resource type="Texture2D" uid="uid://bk1hppqxlbqcd" path="res://assets/temp/parchment-background.svg" id="1_tki75"]
+[ext_resource type="Script" uid="uid://cuoe7eyd8mmcr" path="res://scripts/RunicCircle.gd" id="2_gqg7b"]
+[ext_resource type="Texture2D" uid="uid://1gjrw53fldsp" path="res://assets/temp/runic-circle-background.svg" id="3_p30n8"]
+[ext_resource type="Script" uid="uid://riva2co0ae4d" path="res://scripts/RuneNode.gd" id="4_xqlyg"]
+[ext_resource type="Texture2D" uid="uid://dou5xec063x05" path="res://assets/temp/node-placeholder.svg" id="5_wtyil"]
+[ext_resource type="Texture2D" uid="uid://ckwuy5cyl2dtl" path="res://assets/temp/node-highlight.svg" id="6_js6qt"]
+[ext_resource type="Texture2D" uid="uid://daf7qtwbyeew0" path="res://assets/temp/success-indicator.svg" id="7_l8pgn"]
+[ext_resource type="Texture2D" uid="uid://rbxtxjdipbc6" path="res://assets/temp/rune-tray.svg" id="8_al0c0"]
+[ext_resource type="Script" uid="uid://ojn8p5snn4ko" path="res://scripts/Rune.gd" id="9_qxcc4"]
+[ext_resource type="Texture2D" uid="uid://b4sgcaff0hoer" path="res://assets/temp/rune-sowilo.svg" id="10_lv01k"]
+[ext_resource type="Texture2D" uid="uid://bbufq40t2ckhs" path="res://assets/temp/rune-glow.svg" id="11_su4tq"]
+[ext_resource type="Texture2D" uid="uid://b3uv5jfmwoe0g" path="res://assets/temp/rune-fehu.svg" id="12_efwbv"]
+[ext_resource type="Texture2D" uid="uid://s8xr7gree6w" path="res://assets/temp/rune-ansuz.svg" id="13_0duqf"]
+[ext_resource type="Texture2D" uid="uid://80g6msa45igf" path="res://assets/temp/rune-jera.svg" id="14_mrhn4"]
+[ext_resource type="Texture2D" uid="uid://uryt46ly3ae" path="res://assets/temp/rune-dagaz.svg" id="15_2jpep"]
+[ext_resource type="Script" uid="uid://2d36w4o0in7d" path="res://scripts/ResourceContainer.gd" id="16_v2lex"]
+[ext_resource type="Texture2D" uid="uid://dmq1hrmmadxs2" path="res://assets/temp/resource-container.svg" id="17_g2n4f"]
+[ext_resource type="Texture2D" uid="uid://cjq5aqorkql2p" path="res://assets/temp/resource-fill.svg" id="18_46kgv"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ux0xw"]
+radius = 16.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_iw36l"]
+radius = 24.0
+
+[node name="FirstPage" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(576, 320)
+texture = ExtResource("1_tki75")
+
+[node name="RunicCircle" type="Node2D" parent="."]
+position = Vector2(576, 320)
+script = ExtResource("2_gqg7b")
+
+[node name="CircleBackground" type="Sprite2D" parent="RunicCircle"]
+texture = ExtResource("3_p30n8")
+
+[node name="CentralNode" type="Area2D" parent="RunicCircle"]
+script = ExtResource("4_xqlyg")
+required_rune_type = "sowilo"
+
+[node name="NodePlaceholder" type="Sprite2D" parent="RunicCircle/CentralNode"]
+texture = ExtResource("5_wtyil")
+
+[node name="NodeHighlight" type="Sprite2D" parent="RunicCircle/CentralNode"]
+visible = false
+texture = ExtResource("6_js6qt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RunicCircle/CentralNode"]
+shape = SubResource("CircleShape2D_ux0xw")
+
+[node name="CardinalNodes" type="Node2D" parent="RunicCircle"]
+
+[node name="NorthNode" type="Area2D" parent="RunicCircle/CardinalNodes"]
+position = Vector2(0, -152)
+script = ExtResource("4_xqlyg")
+required_rune_type = "dagaz"
+node_position = "north"
+
+[node name="NodePlaceholder" type="Sprite2D" parent="RunicCircle/CardinalNodes/NorthNode"]
+texture = ExtResource("5_wtyil")
+
+[node name="NodeHighlight" type="Sprite2D" parent="RunicCircle/CardinalNodes/NorthNode"]
+visible = false
+texture = ExtResource("6_js6qt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RunicCircle/CardinalNodes/NorthNode"]
+shape = SubResource("CircleShape2D_ux0xw")
+
+[node name="EastNode" type="Area2D" parent="RunicCircle/CardinalNodes"]
+position = Vector2(152, 0)
+script = ExtResource("4_xqlyg")
+required_rune_type = "ansuz"
+node_position = "east"
+
+[node name="NodePlaceholder" type="Sprite2D" parent="RunicCircle/CardinalNodes/EastNode"]
+texture = ExtResource("5_wtyil")
+
+[node name="NodeHighlight" type="Sprite2D" parent="RunicCircle/CardinalNodes/EastNode"]
+visible = false
+texture = ExtResource("6_js6qt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RunicCircle/CardinalNodes/EastNode"]
+shape = SubResource("CircleShape2D_ux0xw")
+
+[node name="SouthNode" type="Area2D" parent="RunicCircle/CardinalNodes"]
+position = Vector2(0, 152)
+script = ExtResource("4_xqlyg")
+required_rune_type = "fehu"
+node_position = "south"
+
+[node name="NodePlaceholder" type="Sprite2D" parent="RunicCircle/CardinalNodes/SouthNode"]
+texture = ExtResource("5_wtyil")
+
+[node name="NodeHighlight" type="Sprite2D" parent="RunicCircle/CardinalNodes/SouthNode"]
+visible = false
+texture = ExtResource("6_js6qt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RunicCircle/CardinalNodes/SouthNode"]
+shape = SubResource("CircleShape2D_ux0xw")
+
+[node name="WestNode" type="Area2D" parent="RunicCircle/CardinalNodes"]
+position = Vector2(-152, 0)
+script = ExtResource("4_xqlyg")
+required_rune_type = "jera"
+node_position = "west"
+
+[node name="NodePlaceholder" type="Sprite2D" parent="RunicCircle/CardinalNodes/WestNode"]
+texture = ExtResource("5_wtyil")
+
+[node name="NodeHighlight" type="Sprite2D" parent="RunicCircle/CardinalNodes/WestNode"]
+visible = false
+texture = ExtResource("6_js6qt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RunicCircle/CardinalNodes/WestNode"]
+shape = SubResource("CircleShape2D_ux0xw")
+
+[node name="ConnectionLines" type="Node2D" parent="RunicCircle"]
+
+[node name="ConnectionLine_north" type="Line2D" parent="RunicCircle/ConnectionLines"]
+visible = false
+points = PackedVector2Array(0, -152, 0, 0)
+width = 2.0
+default_color = Color(0.8, 0.8, 0.8, 0.5)
+
+[node name="ConnectionLine_east" type="Line2D" parent="RunicCircle/ConnectionLines"]
+visible = false
+points = PackedVector2Array(152, 0, 0, 0)
+width = 2.0
+default_color = Color(0.8, 0.8, 0.8, 0.5)
+
+[node name="ConnectionLine_south" type="Line2D" parent="RunicCircle/ConnectionLines"]
+visible = false
+points = PackedVector2Array(0, 152, 0, 0)
+width = 2.0
+default_color = Color(0.8, 0.8, 0.8, 0.5)
+
+[node name="ConnectionLine_west" type="Line2D" parent="RunicCircle/ConnectionLines"]
+visible = false
+points = PackedVector2Array(-152, 0, 0, 0)
+width = 2.0
+default_color = Color(0.8, 0.8, 0.8, 0.5)
+
+[node name="ActivationParticles" type="CPUParticles2D" parent="RunicCircle"]
+emitting = false
+emission_shape = 1
+emission_sphere_radius = 25.0
+direction = Vector2(-1, 0)
+gravity = Vector2(0, -980)
+
+[node name="SuccessIndicator" type="Sprite2D" parent="RunicCircle"]
+visible = false
+texture = ExtResource("7_l8pgn")
+
+[node name="RuneTray" type="Node2D" parent="."]
+position = Vector2(576, 600)
+
+[node name="TrayBackground" type="Sprite2D" parent="RuneTray"]
+texture = ExtResource("8_al0c0")
+
+[node name="RuneContainer" type="Node2D" parent="RuneTray"]
+
+[node name="RuneSowilo" type="Area2D" parent="RuneTray/RuneContainer"]
+position = Vector2(-160, 0)
+script = ExtResource("9_qxcc4")
+rune_type = "sowilo"
+
+[node name="Sprite2D" type="Sprite2D" parent="RuneTray/RuneContainer/RuneSowilo"]
+texture = ExtResource("10_lv01k")
+
+[node name="RuneGlow" type="Sprite2D" parent="RuneTray/RuneContainer/RuneSowilo"]
+visible = false
+texture = ExtResource("11_su4tq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RuneTray/RuneContainer/RuneSowilo"]
+shape = SubResource("CircleShape2D_iw36l")
+
+[node name="RuneFehu" type="Area2D" parent="RuneTray/RuneContainer"]
+position = Vector2(-80, 0)
+script = ExtResource("9_qxcc4")
+rune_type = "fehu"
+
+[node name="Sprite2D" type="Sprite2D" parent="RuneTray/RuneContainer/RuneFehu"]
+texture = ExtResource("12_efwbv")
+
+[node name="RuneGlow" type="Sprite2D" parent="RuneTray/RuneContainer/RuneFehu"]
+visible = false
+texture = ExtResource("11_su4tq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RuneTray/RuneContainer/RuneFehu"]
+shape = SubResource("CircleShape2D_iw36l")
+
+[node name="RuneAnsuz" type="Area2D" parent="RuneTray/RuneContainer"]
+script = ExtResource("9_qxcc4")
+rune_type = "ansuz"
+
+[node name="Sprite2D" type="Sprite2D" parent="RuneTray/RuneContainer/RuneAnsuz"]
+texture = ExtResource("13_0duqf")
+
+[node name="RuneGlow" type="Sprite2D" parent="RuneTray/RuneContainer/RuneAnsuz"]
+visible = false
+texture = ExtResource("11_su4tq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RuneTray/RuneContainer/RuneAnsuz"]
+shape = SubResource("CircleShape2D_iw36l")
+
+[node name="RuneJera" type="Area2D" parent="RuneTray/RuneContainer"]
+position = Vector2(80, 0)
+script = ExtResource("9_qxcc4")
+rune_type = "jera"
+
+[node name="Sprite2D" type="Sprite2D" parent="RuneTray/RuneContainer/RuneJera"]
+texture = ExtResource("14_mrhn4")
+
+[node name="RuneGlow" type="Sprite2D" parent="RuneTray/RuneContainer/RuneJera"]
+visible = false
+texture = ExtResource("11_su4tq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RuneTray/RuneContainer/RuneJera"]
+shape = SubResource("CircleShape2D_iw36l")
+
+[node name="RuneDagaz" type="Area2D" parent="RuneTray/RuneContainer"]
+position = Vector2(160, 0)
+script = ExtResource("9_qxcc4")
+rune_type = "Dagaz"
+
+[node name="Sprite2D" type="Sprite2D" parent="RuneTray/RuneContainer/RuneDagaz"]
+texture = ExtResource("15_2jpep")
+
+[node name="RuneGlow" type="Sprite2D" parent="RuneTray/RuneContainer/RuneDagaz"]
+visible = false
+texture = ExtResource("11_su4tq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RuneTray/RuneContainer/RuneDagaz"]
+shape = SubResource("CircleShape2D_iw36l")
+
+[node name="ResourceContainer" type="Node2D" parent="."]
+position = Vector2(88, 576)
+script = ExtResource("16_v2lex")
+
+[node name="ContainerGraphic" type="Sprite2D" parent="ResourceContainer"]
+texture = ExtResource("17_g2n4f")
+
+[node name="ResourceFill" type="Sprite2D" parent="ResourceContainer"]
+scale = Vector2(1e-05, 1e-05)
+texture = ExtResource("18_46kgv")
+
+[node name="ResourceParticles" type="CPUParticles2D" parent="ResourceContainer"]
+position = Vector2(0, -136)
+emitting = false
+lifetime = 0.55
+emission_shape = 1
+emission_sphere_radius = 25.0
+direction = Vector2(-1, 0)
+
+[node name="ResourceCounter" type="Label" parent="ResourceContainer"]
+offset_right = 40.0
+offset_bottom = 23.0
+horizontal_alignment = 1
