@@ -73,20 +73,3 @@ func activate():
 	# Tell the placed rune to activate as well
 	if placed_rune:
 		placed_rune.activate()
-
-# Start highlighting this node (for tutorial purposes)
-func start_highlight():
-	$NodeHighlight.visible = true
-	# Create a simple pulsing animation
-	var tween = create_tween().set_loops()
-	tween.tween_property($NodeHighlight, "modulate:a", 0.2, 1.0)
-	tween.tween_property($NodeHighlight, "modulate:a", 0.8, 1.0)
-
-# Stop highlighting this node
-func stop_highlight():
-	$NodeHighlight.visible = false
-	# Stop any active tweens
-	var tweens = get_tree().get_nodes_in_group("tweens")
-	for tween in tweens:
-		if tween.is_valid() and tween.is_running():
-			tween.kill()

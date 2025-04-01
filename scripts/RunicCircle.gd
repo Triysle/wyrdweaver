@@ -26,9 +26,6 @@ func _ready():
 	# Initialize connection lines as invisible
 	for line in connection_lines.get_children():
 		line.visible = false
-	
-	# Start with the central node highlighted for tutorial
-	central_node.start_highlight()
 
 # Connect signals from all rune nodes
 func _connect_node_signals():
@@ -52,10 +49,6 @@ func _on_rune_placed_correctly(node_position):
 	if not activated_nodes.has(node_position):
 		activated_nodes.append(node_position)
 	
-	# If center node was just activated, highlight the cardinal nodes
-	if node_position == "center" and activated_nodes.size() == 1:
-		_highlight_cardinal_nodes()
-		
 	# Update connections
 	_update_connections()
 	
@@ -79,16 +72,6 @@ func _update_connections():
 					line.visible = true
 					connection_lines_visible.append(cardinal_pos)
 
-# Highlight the cardinal nodes after center is activated
-func _highlight_cardinal_nodes():
-	# Stop highlighting the central node
-	central_node.stop_highlight()
-	
-	# Start highlighting all cardinal nodes
-	for node in cardinal_nodes.get_children():
-		if node is RuneNode:
-			node.start_highlight()
-
 # Check if the pattern is complete and activate the circle if it is
 func _check_pattern_completion():
 	# For the first circle, we consider it complete when all 5 nodes are filled
@@ -101,11 +84,6 @@ func _activate_circle():
 		return
 		
 	is_circle_activated = true
-	
-	# Stop any highlights
-	for node in cardinal_nodes.get_children():
-		if node is RuneNode:
-			node.stop_highlight()
 	
 	# Activate all nodes
 	central_node.activate()

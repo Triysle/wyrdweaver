@@ -2,7 +2,6 @@ extends Node
 
 # Settings that apply to the entire game
 var debug_mode: bool = false
-var tutorial_enabled: bool = true
 var sound_enabled: bool = false  # Since our game design doesn't use audio
 
 # Resources
