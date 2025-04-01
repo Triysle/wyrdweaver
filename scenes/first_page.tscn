@@ -1,0 +1,63 @@
+[gd_scene load_steps=5 format=3 uid="uid://25nky7rd1e5a"]
+
+[ext_resource type="Script" uid="uid://osikq78blkle" path="res://scripts/CircleManager.gd" id="1_wpd0v"]
+[ext_resource type="PackedScene" uid="uid://c0lk6ojhkhii2" path="res://scenes/rune_node.tscn" id="2_pamwi"]
+[ext_resource type="Script" uid="uid://bjy1rmf78x0hk" path="res://scripts/RuneTray.gd" id="3_t2jlb"]
+[ext_resource type="Script" uid="uid://b6gwq3e6povl1" path="res://scripts/ResourceManager.gd" id="4_usxu7"]
+
+[node name="FirstPage" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(576, 328)
+
+[node name="BookElements" type="Node2D" parent="."]
+
+[node name="LeftPage" type="Sprite2D" parent="BookElements"]
+position = Vector2(288, 320)
+
+[node name="RightPage" type="Sprite2D" parent="BookElements"]
+position = Vector2(864, 320)
+
+[node name="BindingSpine" type="Sprite2D" parent="BookElements"]
+position = Vector2(576, 320)
+
+[node name="RunicCircle" type="Node2D" parent="."]
+script = ExtResource("1_wpd0v")
+
+[node name="CircleGraphic" type="Sprite2D" parent="RunicCircle"]
+
+[node name="CentralNode" parent="RunicCircle" instance=ExtResource("2_pamwi")]
+
+[node name="CardinalNodes" type="Node2D" parent="RunicCircle"]
+
+[node name="NorthNode" parent="RunicCircle/CardinalNodes" instance=ExtResource("2_pamwi")]
+
+[node name="EastNode" parent="RunicCircle/CardinalNodes" instance=ExtResource("2_pamwi")]
+
+[node name="SouthNode" parent="RunicCircle/CardinalNodes" instance=ExtResource("2_pamwi")]
+
+[node name="WestNode" parent="RunicCircle/CardinalNodes" instance=ExtResource("2_pamwi")]
+
+[node name="ConnectionLines" type="Node2D" parent="RunicCircle"]
+
+[node name="ActivationParticles" type="GPUParticles2D" parent="RunicCircle"]
+
+[node name="RuneTray" type="Node2D" parent="."]
+script = ExtResource("3_t2jlb")
+
+[node name="TrayBackground" type="Sprite2D" parent="RuneTray"]
+
+[node name="RuneContainer" type="Node2D" parent="RuneTray"]
+
+[node name="ResourceContainer" type="Node2D" parent="."]
+script = ExtResource("4_usxu7")
+
+[node name="ContainerSprite" type="Sprite2D" parent="ResourceContainer"]
+
+[node name="FillSprite" type="Sprite2D" parent="ResourceContainer"]
+
+[node name="ResourceParticles" type="GPUParticles2D" parent="ResourceContainer"]
+
+[node name="ResourceCounter" type="Node2D" parent="ResourceContainer"]
+
+[node name="UI" type="CanvasLayer" parent="."]
