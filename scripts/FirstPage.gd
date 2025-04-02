@@ -20,8 +20,8 @@ func _ready():
 
 # Initialize the rune tray
 func _initialize_rune_tray():
-	# Add RuneTray script to the RuneTray node if it doesn't have it
-	if not rune_tray.has_script():
+	# Make sure RuneTray has the correct script
+	if not rune_tray.has_script() or not rune_tray is RuneTray:
 		rune_tray.set_script(load("res://scripts/RuneTray.gd"))
 		print("Added RuneTray script")
 
@@ -47,12 +47,14 @@ func _connect_signals():
 	if rune_tray and rune_tray.has_node("RuneContainer"):
 		for rune in rune_tray.get_node("RuneContainer").get_children():
 			if rune is Rune:
+				# Disconnect existing connections to avoid duplicates
 				if rune.is_connected("rune_drag_started", _on_rune_drag_started):
 					rune.rune_drag_started.disconnect(_on_rune_drag_started)
 				
 				if rune.is_connected("rune_drag_ended", _on_rune_drag_ended):
 					rune.rune_drag_ended.disconnect(_on_rune_drag_ended)
 				
+				# Connect the signals
 				rune.rune_drag_started.connect(_on_rune_drag_started)
 				rune.rune_drag_ended.connect(_on_rune_drag_ended)
 		print("Rune signals connected successfully")

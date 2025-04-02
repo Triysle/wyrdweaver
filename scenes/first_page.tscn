@@ -7,10 +7,10 @@
 [ext_resource type="Texture2D" uid="uid://dou5xec063x05" path="res://assets/temp/node-placeholder.svg" id="5_wtyil"]
 [ext_resource type="Texture2D" uid="uid://ckwuy5cyl2dtl" path="res://assets/temp/node-highlight.svg" id="6_js6qt"]
 [ext_resource type="Texture2D" uid="uid://daf7qtwbyeew0" path="res://assets/temp/success-indicator.svg" id="7_l8pgn"]
-[ext_resource type="Texture2D" uid="uid://rbxtxjdipbc6" path="res://assets/temp/rune-tray.svg" id="8_al0c0"]
 [ext_resource type="Script" uid="uid://ojn8p5snn4ko" path="res://scripts/Rune.gd" id="9_qxcc4"]
 [ext_resource type="Script" uid="uid://dhcf3pu00uv1p" path="res://scripts/RuneTray.gd" id="9_xwo0y"]
 [ext_resource type="Texture2D" uid="uid://b4sgcaff0hoer" path="res://assets/temp/rune-sowilo.svg" id="10_lv01k"]
+[ext_resource type="Texture2D" uid="uid://cdpmosut5sh36" path="res://assets/temp/updated-rune-tray.svg" id="10_xwo0y"]
 [ext_resource type="Texture2D" uid="uid://bbufq40t2ckhs" path="res://assets/temp/rune-glow.svg" id="11_su4tq"]
 [ext_resource type="Texture2D" uid="uid://b3uv5jfmwoe0g" path="res://assets/temp/rune-fehu.svg" id="12_efwbv"]
 [ext_resource type="Texture2D" uid="uid://s8xr7gree6w" path="res://assets/temp/rune-ansuz.svg" id="13_0duqf"]
@@ -169,7 +169,7 @@ position = Vector2(576, 600)
 script = ExtResource("9_xwo0y")
 
 [node name="TrayBackground" type="Sprite2D" parent="RuneTray"]
-texture = ExtResource("8_al0c0")
+texture = ExtResource("10_xwo0y")
 
 [node name="RuneContainer" type="Node2D" parent="RuneTray"]
 

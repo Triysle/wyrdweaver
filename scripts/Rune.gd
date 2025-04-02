@@ -94,10 +94,18 @@ func end_drag():
 	# If no valid placement, return to tray
 	if not valid_placement:
 		print("No valid placement found, returning to tray")
+		current_state = "in_tray"  # Set this before returning to ensure tray knows it's handling a tray rune
+		current_node = null
+		
+		# Signal that dragging has ended BEFORE calling return_to_tray
+		# This ensures the tray knows to handle this rune
+		emit_signal("rune_drag_ended", self)
+		
+		# Now return to tray
 		return_to_tray()
-	
-	# Signal that dragging has ended
-	emit_signal("rune_drag_ended", self)
+	else:
+		# Signal that dragging has ended
+		emit_signal("rune_drag_ended", self)
 	
 	# Disable processing for movement
 	set_process(false)
@@ -139,9 +147,47 @@ func return_to_tray():
 	# Turn off any activation effects
 	deactivate()
 	
-	# Let the tray manage positioning
-	# The tween is now handled by the RuneTray script
-	print("Rune returned to tray")
+	# Find tray to properly position the rune
+	var tray = _find_rune_tray()
+	if tray:
+		print("Found tray, letting it handle positioning")
+		# The rune is now in the "in_tray" state, so emit the signal
+		# This will cause the tray to find a slot via the _on_rune_drag_ended handler
+		# We don't need to do anything else here, tray will handle it
+	else:
+		print("Tray not found, using original position")
+		# Fallback to original position if tray can't be found
+		var tween = create_tween()
+		tween.tween_property(self, "position", original_position, 0.3).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
+
+# Find the rune tray in the scene
+func _find_rune_tray():
+	var parent = get_parent()
+	while parent:
+		if parent.get_parent() is RuneTray:
+			return parent.get_parent()
+		parent = parent.get_parent()
+	
+	# Try to find by node type in the scene
+	var root = get_tree().get_root()
+	for node in root.get_children():
+		var tray = _find_tray_in_node(node)
+		if tray:
+			return tray
+	
+	return null
+
+# Recursive helper to find tray
+func _find_tray_in_node(node):
+	if node is RuneTray:
+		return node
+	
+	for child in node.get_children():
+		var result = _find_tray_in_node(child)
+		if result:
+			return result
+	
+	return null
 
 # Activate the rune (when part of a completed pattern)
 func activate():
