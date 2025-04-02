@@ -5,10 +5,11 @@ class_name Rune
 @export var rune_type: String = ""  # sowilo, fehu, ansuz, jera, dagaz
 
 # Current state
-var current_state: String = "in_tray"  # in_tray, being_dragged, placed, activated
+var current_state: String = "in_tray"  # in_tray, being_dragged, placed
 var original_position: Vector2 = Vector2.ZERO
 var is_being_dragged: bool = false
 var current_node = null  # Reference to the node where this rune is placed
+var is_activated: bool = false  # Track activation state separately from placement
 
 # Signals
 signal rune_drag_started(rune)
@@ -31,9 +32,6 @@ func _ready():
 	print("Rune initialized: ", rune_type)
 
 func _input_event(_viewport, event, _shape_idx):
-	if current_state == "activated":
-		return
-		
 	# Mouse button pressed - start dragging
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
@@ -51,11 +49,13 @@ func _process(_delta):
 
 # Start dragging this rune
 func start_drag():
-	if current_state == "placed" or current_state == "activated":
-		print("Cannot drag rune in state: ", current_state)
-		return
-		
 	is_being_dragged = true
+	
+	# If the rune is currently placed, tell the node it's being removed
+	if current_state == "placed" and current_node != null:
+		deactivate() # Turn off activation effects
+		current_node.remove_rune()
+	
 	current_state = "being_dragged"
 	
 	print("Started dragging rune: ", rune_type)
@@ -85,13 +85,11 @@ func end_drag():
 	for area in overlapping_areas:
 		if area is RuneNode:
 			var node = area
-			print("Found RuneNode: ", node.node_position, " requires: ", node.required_rune_type)
-			if node.can_accept_rune(rune_type):
-				print("Placing rune ", rune_type, " on node ", node.node_position)
-				# Place on node
-				place_on_node(node)
-				valid_placement = true
-				break
+			print("Found RuneNode: ", node.node_position)
+			# Place on node whether it's the correct type or not
+			place_on_node(node)
+			valid_placement = true
+			break
 	
 	# If no valid placement, return to tray
 	if not valid_placement:
@@ -120,22 +118,29 @@ func place_on_node(node):
 		# Successfully placed
 		print("Rune placed successfully")
 		z_index = 5  # Above node but below other dragged runes
+		
+		# Check if it's the correct rune type for this node
+		if node.required_rune_type == rune_type:
+			print("Correct rune type!")
+		else:
+			print("Incorrect rune type, but placement allowed")
 	else:
-		# Node rejected placement
+		# Node rejected placement (already has a rune)
 		print("Node rejected placement")
 		return_to_tray()
 
 # Return this rune to its original position in the tray
 func return_to_tray():
-	# Create a tween for smooth return animation
-	var tween = create_tween()
-	tween.tween_property(self, "position", original_position, 0.3).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
-	
-	# Reset state
+	# Reset state first
 	current_state = "in_tray"
 	current_node = null
 	z_index = 0
 	
+	# Turn off any activation effects
+	deactivate()
+	
+	# Let the tray manage positioning
+	# The tween is now handled by the RuneTray script
 	print("Rune returned to tray")
 
 # Activate the rune (when part of a completed pattern)
@@ -143,8 +148,12 @@ func activate():
 	if current_state != "placed":
 		print("Cannot activate rune in state: ", current_state)
 		return
+	
+	if is_activated:
+		print("Rune already activated")
+		return
 		
-	current_state = "activated"
+	is_activated = true
 	
 	print("Rune activated: ", rune_type)
 	
@@ -155,6 +164,21 @@ func activate():
 	var tween = create_tween().set_loops()
 	tween.tween_property($RuneGlow, "modulate:a", 0.3, 1.5)
 	tween.tween_property($RuneGlow, "modulate:a", 0.8, 1.5)
+
+# Deactivate the rune (when removed from a node or pattern breaks)
+func deactivate():
+	if not is_activated:
+		return
+		
+	is_activated = false
 	
-	# Disable further interaction
-	set_process(false)
+	print("Rune deactivated: ", rune_type)
+	
+	# Hide the glow effect
+	$RuneGlow.visible = false
+	
+	# Stop any active tweens
+	var tweens = get_tree().get_nodes_in_group("tweens")
+	for tween in tweens:
+		if tween.is_valid() and tween.get_meta("target", null) == $RuneGlow:
+			tween.kill()

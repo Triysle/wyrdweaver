@@ -7,11 +7,23 @@ class_name FirstPage
 @onready var resource_container = $ResourceContainer
 
 func _ready():
-	print("FirstPage ready - connecting signals")
+	print("FirstPage ready - initializing nodes")
+	
+	# Initialize the rune tray system
+	_initialize_rune_tray()
+	
 	# Wait one frame to make sure all nodes are fully initialized
 	await get_tree().process_frame
+	
 	# Connect signals
 	_connect_signals()
+
+# Initialize the rune tray
+func _initialize_rune_tray():
+	# Add RuneTray script to the RuneTray node if it doesn't have it
+	if not rune_tray.has_script():
+		rune_tray.set_script(load("res://scripts/RuneTray.gd"))
+		print("Added RuneTray script")
 
 # Connect all necessary signals
 func _connect_signals():
@@ -71,9 +83,13 @@ func _on_circle_activated():
 		print("ERROR: ResourceContainer not found when activating circle!")
 
 # Handle rune drag started
-func _on_rune_drag_started(_rune):
-	print("Rune drag started")
+func _on_rune_drag_started(rune):
+	print("Rune drag started: ", rune.rune_type)
+	
+	# If it's coming from the tray, free up its slot
+	if rune.current_state == "in_tray" and rune_tray and rune_tray.has_method("free_slot_for_rune"):
+		rune_tray.free_slot_for_rune(rune)
 
 # Handle rune drag ended
-func _on_rune_drag_ended(_rune):
-	print("Rune drag ended")
+func _on_rune_drag_ended(rune):
+	print("Rune drag ended: ", rune.rune_type)
